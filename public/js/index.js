@@ -8,14 +8,16 @@ socket.on("connect", function(s) {
     console.log(data)
   })
 
+  socket.on("welcomeUser", function(data) {
+    console.log(data.text);
+  })
+
+  socket.on("NewUser", function(data) {
+    console.log(data.text);
+  })
+
 })
 
 socket.on("disconnect", function() {
   console.log("Disconnected from server");
-})
-
-socket.emit("sendMessage", {
-  from: "Deepak",
-  text: "Hi",
-  createdAt: new Date().toDateString()
 })
