@@ -20,9 +20,10 @@ io.on("connection", (socket) => {
   socket.emit("welcomeUser", createMessage("Admin", "Welcome to our chat"));
   socket.broadcast.emit("NewUser", createMessage("Admin", "New member has joined our chat"));
 
-  socket.on("sendMessage", (data) => {
+  socket.on("sendMessage", (data, callback) => {
     console.log(data);
     io.emit("recieveMessage", createMessage(data.from, data.text));
+    callback("Got the ack from server");
   })
 
   socket.on("disconnect", () => {

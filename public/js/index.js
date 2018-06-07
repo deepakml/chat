@@ -5,7 +5,7 @@ socket.on("connect", function(s) {
 
   socket.on("recieveMessage", function(data) {
     console.log("Recieved message");
-    console.log(data)
+    jQuery("#message-list").append("<li>" + data.from + ": " + data.text + "</li>");
   })
 
   socket.on("welcomeUser", function(data) {
@@ -21,3 +21,17 @@ socket.on("connect", function(s) {
 socket.on("disconnect", function() {
   console.log("Disconnected from server");
 })
+
+jQuery(document).ready(function(){
+  jQuery("#chat").on("keypress submit", function(e) {
+    if (e.which === 13 || e.type === 'submit') {
+      socket.emit("sendMessage", {
+        from: "User",
+        text: jQuery("#message").val()
+      }, function(data) {
+        jQuery("#message").val("");
+      })
+      e.preventDefault();
+    }
+  })
+});
